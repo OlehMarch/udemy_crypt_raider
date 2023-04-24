@@ -4,6 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Components/SceneComponent.h"
+#include "Engine/World.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
+#include "DrawDebugHelpers.h"
+
 #include "Grabber.generated.h"
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -22,4 +26,20 @@ protected:
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
+	UFUNCTION(BlueprintCallable)
+	void Grab();
+	UFUNCTION(BlueprintCallable)
+	void Release();
+
+private:
+	UPhysicsHandleComponent *GetPhysicsHandle() const;
+	bool GetGrabbableInReach(FHitResult &OutHitResult) const;
+
+	UPROPERTY(EditAnywhere)
+	float GrabDistance = 200;
+	UPROPERTY(EditAnywhere)
+	float GrabRadius = 100;
+	UPROPERTY(EditAnywhere)
+	float HoldDistance = 100;
 };
